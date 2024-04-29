@@ -5,16 +5,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class GameGraphics extends JFrame{
-    Draw draw;
-    GameLogic logic;
-    BufferedImage image;
+    GamePanel panel;
 
-    public GameGraphics(GameLogic logic) throws HeadlessException {
-        this.draw= new Draw();
-        this.logic= logic;
-
-
-        setSize(1080, 720);
+    public GameGraphics() throws HeadlessException {
+        panel = new GamePanel();
+        add(panel);
+        pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -22,12 +18,4 @@ public class GameGraphics extends JFrame{
 
     }
 
-    public void update(GameLogic logic) {
-    }
-
-
-    public class Draw extends JPanel {
-
-
-    }
 }
