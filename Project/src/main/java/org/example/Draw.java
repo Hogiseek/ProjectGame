@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.logic.BackGround;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,8 +12,12 @@ public class Draw{
 
     }
     public void render(Graphics g){
-        logic.backGround.draw(g);
+        for (BackGround backGround: logic.backGrounds){
+            backGround.draw(g);
         logic.player.draw(g);
+
+
+        }
 
     }
 

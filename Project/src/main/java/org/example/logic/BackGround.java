@@ -1,11 +1,11 @@
 package org.example.logic;
 
 public class BackGround extends Entity{
-    public BackGround() {
+    public BackGround(String file, int y) {
         setWidth(1080);
-        setHeight(6320);
-        setImage("BackgroundGame.png");
-        setY(-6320+800);
+        setHeight(720);
+        setImage(file);
+        setY(y);
 
 
     }
