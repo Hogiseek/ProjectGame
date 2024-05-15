@@ -1,5 +1,7 @@
 package org.example.logic;
 
+import org.example.Draw;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +10,7 @@ import java.awt.event.KeyListener;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
-public class Player extends Entity implements KeyListener, ActionListener {
+public class Player extends Draw implements KeyListener, ActionListener {
     boolean LEFT, RIGHT, JUMP;
     private int velocity = 0;
     private Timer timer;
@@ -20,7 +22,7 @@ public class Player extends Entity implements KeyListener, ActionListener {
         setImage("King_JumpR.png");
         setHeight(80);
         setWidth(80);
-        setX(1000/2);
+        setX(500);
         setY(100-getHeight());
         timer = new Timer(20, this);
         timer.start();

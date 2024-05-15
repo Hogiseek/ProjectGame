@@ -1,6 +1,11 @@
 package org.example.logic;
 
-public class BackGround extends Entity{
+import org.example.Draw;
+
+import java.awt.*;
+
+public class BackGround extends Draw {
+
     public BackGround(String file, int y) {
         setWidth(1080);
         setHeight(720);
@@ -12,5 +17,4 @@ public class BackGround extends Entity{
     public void update(){
 
     }
-
 }
