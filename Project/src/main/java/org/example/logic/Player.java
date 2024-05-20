@@ -1,21 +1,20 @@
 package org.example.logic;
 
-import org.example.Draw;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
-public class Player extends Draw implements KeyListener, ActionListener {
+public class Player extends Draw implements KeyListener {
     boolean LEFT, RIGHT, JUMP;
-    private int velocity = 0;
-    private Timer timer;
+    public int velocity = 0;
     private Timer jumpTimer;
-    private boolean canJump = true;
+    public boolean canJump = true;
 
 
     public Player() {
@@ -24,25 +23,48 @@ public class Player extends Draw implements KeyListener, ActionListener {
         setWidth(80);
         setX(500);
         setY(100-getHeight());
-        timer = new Timer(20, this);
-        timer.start();
         addKeyListener(this);
         jumpTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                canJump = true; // resetuje skok
-                jumpTimer.stop(); // zastaví timer po resetu
+                canJump= true; // resetuje skok
+                jumpTimer.stop(); // Zastaví timer po resetování
 
             }
         });
     }
 
-    public void update(){
+    public void update(ArrayList<Island> islands){
+        boolean onGround = false;
+        for (Island island: islands){
+            island.update(); // updatí každého islandu pozici
+            if (getRect().intersects(island.getRect())) {
+                Rectangle playerRect = getRect();
+                Rectangle islandRect = island.getRect();
+
+                if (velocity > 0 && playerRect.y + playerRect.height - velocity <= islandRect.y) {
+                    y = islandRect.y - height; // místo playera nahoře islandu
+                    velocity = 0; // přestane padat
+                    onGround = true; // player je na ostrově
+                }
+            }
+
+        }
         if (LEFT) {
-            x-= 3;
+            x-= 6;
+            for (Island island: islands){
+                if (island.getRect().intersects(getRect())){
+                    x+= 6;
+                }
+            }
         }
         if (RIGHT) {
-            x+= 3;
+            x+= 6;
+            for (Island island: islands){
+                if (island.getRect().intersects(getRect())){
+                    x-= 6;
+                }
+            }
         }
         if (LEFT) {
             setImage("King_JumpL.png");
@@ -50,19 +72,31 @@ public class Player extends Draw implements KeyListener, ActionListener {
             setImage("King_JumpR.png");
         }
         if (JUMP && canJump) {
-            y-= 20;
-            velocity = 0; // obnoví rychlost když skáče
-            canJump = false;
+            velocity-= 20; // obnoví rychlost když skáče
+            canJump= false;
         } else if (JUMP){
             y+= 2; // padá dolů
         }
+        y+= velocity; // aktivuje rychlost
+        velocity+= 1; // dělá to gravitaci
 
-    }
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        update();
-        y += velocity; // aktivuje rychlost
-        velocity += 1; // dělá to gravitaci
+
+        // zajistí aby hráč nebyl mimo obraz
+        if (y> 720 -height) {
+            y= 720 -height;
+            velocity= 0;
+        }
+        // vpravo neprojde
+        if (x> 1080 -width) {
+            x= 1080 -width;
+            velocity+= 1;
+        }
+        // vlevo neprojde
+        //if (x> 1080 -width) {
+          //  x= 1080 -width;
+            //velocity = 0;
+        //}
+
     }
 
     @Override
@@ -81,9 +115,9 @@ public class Player extends Draw implements KeyListener, ActionListener {
             RIGHT = true;
         }
         if (keys == KeyEvent.VK_SPACE && canJump) {
-            velocity = -10; // Počáteční rychlost skoku
+            velocity = -15; // Počáteční rychlost skoku
             canJump = false; // dělá dokud cooldown není dokončen
-            jumpTimer.start(); // znovu začne cooldown
+            jumpTimer.start(); // Startne cooldown
         }
 
 
@@ -105,4 +139,6 @@ public class Player extends Draw implements KeyListener, ActionListener {
     }
 
 
+    protected void paintComponent(Graphics g) {
+    }
 }
