@@ -15,6 +15,8 @@ public class Player extends Draw implements KeyListener {
     public int velocity = 0;
     private Timer jumpTimer;
     public boolean canJump = true;
+    private final int frameHeight = 720;
+    private final int frameWidth = 1080;
 
 
     public Player() {
@@ -24,7 +26,7 @@ public class Player extends Draw implements KeyListener {
         setX(500);
         setY(100-getHeight());
         addKeyListener(this);
-        jumpTimer = new Timer(1000, new ActionListener() {
+        jumpTimer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 canJump= true; // resetuje skok
@@ -81,22 +83,23 @@ public class Player extends Draw implements KeyListener {
         velocity+= 1; // dělá to gravitaci
 
 
-        // zajistí aby hráč nebyl mimo obraz
-        if (y> 720 -height) {
-            y= 720 -height;
-            velocity= 0;
+        // zajistí aby se hra obnovila
+        if (y > frameHeight - height) {
+            restartGame();
         }
         // vpravo neprojde
-        if (x> 1080 -width) {
-            x= 1080 -width;
-            velocity+= 1;
+        if (x> frameWidth -width) {
+            x= frameWidth -width;
         }
         // vlevo neprojde
-        //if (x> 1080 -width) {
-          //  x= 1080 -width;
-            //velocity = 0;
-        //}
+        if (x< 0) {
+           x= 0;
+        }
 
+    }
+    private void restartGame() {
+        setX(500);
+        setY(100 - getHeight());
     }
 
     @Override
@@ -115,7 +118,7 @@ public class Player extends Draw implements KeyListener {
             RIGHT = true;
         }
         if (keys == KeyEvent.VK_SPACE && canJump) {
-            velocity = -15; // Počáteční rychlost skoku
+            velocity = -16; // Počáteční rychlost skoku
             canJump = false; // dělá dokud cooldown není dokončen
             jumpTimer.start(); // Startne cooldown
         }

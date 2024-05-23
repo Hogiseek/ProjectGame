@@ -15,5 +15,4 @@ public class GameGraphics extends JFrame{
         setVisible(true);
         setTitle("Jumping Crown");
     }
-
 }

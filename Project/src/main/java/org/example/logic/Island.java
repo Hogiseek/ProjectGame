@@ -16,7 +16,7 @@ public class Island extends Draw {
     }
 
     public void update() {
-        y+= fallSpeed; // pohybuje Island dolů pomocí fallspeed
+        y+= fallSpeed; // pohybuje Island dolů
         if (y > screenHeight) {
             resetPosition();
         }

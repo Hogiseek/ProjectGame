@@ -13,12 +13,11 @@ public class GamePanel extends JPanel implements Runnable{
         logic = new GameLogic();
         draw = new Draw(logic);
         setPreferredSize(new Dimension(width, height));
-        Thread thread = new Thread(this);
+        Thread thread= new Thread(this);
         thread.start();
         addKeyListener(logic.player);
         setFocusable(true);
         requestFocus();
-
 
 
     }

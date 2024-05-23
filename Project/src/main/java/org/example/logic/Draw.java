@@ -29,13 +29,15 @@ public class Draw extends Coordinates {
     public void render(Graphics g){
         for (BackGround backGround: logic.backGrounds){
             backGround.draw(g);
-        logic.player.draw(g);
+            logic.player.draw(g);
 
         }
         for (Island island: logic.islands){
             island.draw(g);
 
-
+        }
+        for (Bird bird: logic.birds){
+            bird.draw(g);
         }
 
     }
