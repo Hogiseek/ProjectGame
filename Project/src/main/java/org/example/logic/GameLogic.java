@@ -1,5 +1,6 @@
 package org.example.logic;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -14,10 +15,10 @@ public class GameLogic extends Player implements KeyListener {
     Island island, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12, island13, island14, island15, island16, island17, island18, island19, island20, island21, island22, island23, island24, island25;
     Player player;
     BackGround backGround;
-    ArrayList<BackGround> backGrounds;
+    ArrayList<BackGround> backgrounds;
     ArrayList<Bird> birds;
     Bird bird;
-    boolean GameActive;
+    int phase;
 
 
 
@@ -25,12 +26,11 @@ public class GameLogic extends Player implements KeyListener {
     public GameLogic() {
         int screenHeight= 720;
         int screenWidth= 1080;
+        backgrounds= new ArrayList<>();
         islands= new ArrayList<>();
-        backGrounds= new ArrayList<>();
         player= new Player();
         birds= new ArrayList<>();
         backGround= new BackGround("BackgroundDone.png",0);
-        backGrounds.add(backGround);
 
         bird= new Bird("Bird_UP.png", 1, 50, 50, 50, screenWidth);
 
@@ -116,6 +116,12 @@ public class GameLogic extends Player implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()== KeyEvent.VK_ENTER && phase== 0){
+            phase= 1;
+        }
+        if (e.getKeyCode()== KeyEvent.VK_M && phase== 2){
+            phase= 1;
+        }
     }
 
     @Override

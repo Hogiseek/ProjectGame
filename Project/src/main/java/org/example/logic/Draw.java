@@ -27,7 +27,8 @@ public class Draw extends Coordinates {
         g.drawImage(image, x, y, width, height, null);
     }
     public void render(Graphics g){
-        for (BackGround backGround: logic.backGrounds){
+
+        for (BackGround backGround: logic.backgrounds){
             backGround.draw(g);
             logic.player.draw(g);
 
