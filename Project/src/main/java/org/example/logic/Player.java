@@ -37,7 +37,6 @@ public class Player extends Draw implements KeyListener {
     }
 
     public void update(ArrayList<Island> islands){
-        boolean onGround = false;
         for (Island island: islands){
             island.update(); // updatí každého islandu pozici
             if (getRect().intersects(island.getRect())) {
@@ -47,7 +46,6 @@ public class Player extends Draw implements KeyListener {
                 if (velocity > 0 && playerRect.y + playerRect.height - velocity <= islandRect.y) {
                     y = islandRect.y - height; // místo playera nahoře islandu
                     velocity = 0; // přestane padat
-                    onGround = true; // player je na ostrově
                 }
             }
 
@@ -139,9 +137,5 @@ public class Player extends Draw implements KeyListener {
             JUMP = false;
 
         }
-    }
-
-
-    protected void paintComponent(Graphics g) {
     }
 }

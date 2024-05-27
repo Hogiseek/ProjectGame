@@ -9,13 +9,12 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 
-public class GameLogic extends Player implements KeyListener {
+public class GameLogic implements KeyListener {
 
     ArrayList<Island> islands;
     Island island, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12, island13, island14, island15, island16, island17, island18, island19, island20, island21, island22, island23, island24, island25;
     Player player;
     BackGround backGround;
-    ArrayList<BackGround> backgrounds;
     ArrayList<Bird> birds;
     Bird bird;
     int phase;
@@ -26,7 +25,6 @@ public class GameLogic extends Player implements KeyListener {
     public GameLogic() {
         int screenHeight= 720;
         int screenWidth= 1080;
-        backgrounds= new ArrayList<>();
         islands= new ArrayList<>();
         player= new Player();
         birds= new ArrayList<>();
@@ -93,20 +91,11 @@ public class GameLogic extends Player implements KeyListener {
         //islands.add(island24);
         islands.add(island25);
     }
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        for (Island island: islands) {
-            g.fillRect(island.getX(), island.getY(), island.getWidth(), island.getHeight());
-        }
-    }
-
 
     public void update() {
         player.update(islands);
         backGround.update();
         bird.update();
-
     }
 
     @Override
@@ -116,10 +105,11 @@ public class GameLogic extends Player implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()== KeyEvent.VK_ENTER && phase== 0){
+        int keys = e.getKeyCode();
+        if (keys== KeyEvent.VK_ENTER && phase== 0){
             phase= 1;
         }
-        if (e.getKeyCode()== KeyEvent.VK_M && phase== 2){
+        else if (keys== KeyEvent.VK_M && phase== 2){
             phase= 1;
         }
     }

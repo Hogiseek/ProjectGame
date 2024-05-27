@@ -7,13 +7,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Draw extends Coordinates {
-    public Draw() {
-    }
     BufferedImage image;
-    GameLogic logic;
     int width, height;
-    Draw(GameLogic logic){
-        this.logic = logic;
+    Draw(){
 
     }
     private void loadImage(String file){
@@ -25,22 +21,6 @@ public class Draw extends Coordinates {
     }
     public void draw (Graphics g) {
         g.drawImage(image, x, y, width, height, null);
-    }
-    public void render(Graphics g){
-
-        for (BackGround backGround: logic.backgrounds){
-            backGround.draw(g);
-            logic.player.draw(g);
-
-        }
-        for (Island island: logic.islands){
-            island.draw(g);
-
-        }
-        for (Bird bird: logic.birds){
-            bird.draw(g);
-        }
-
     }
 
     public void setImage(String file) {
