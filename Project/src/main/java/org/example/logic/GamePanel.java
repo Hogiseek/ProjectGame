@@ -11,6 +11,8 @@ public class GamePanel extends JPanel implements Runnable{
     int width= 1080, height= 720;
     GameLogic logic;
     BufferedImage menu;
+    BufferedImage rules;
+    BufferedImage gameover;
 
     GamePanel(){
         logic = new GameLogic();
@@ -23,6 +25,8 @@ public class GamePanel extends JPanel implements Runnable{
         requestFocus();
         try {
             menu= ImageIO.read(new File("src/main/resources/Menu_Project.png"));
+            rules= ImageIO.read(new File("src/main/resources/Rules_Project.png"));
+            gameover= ImageIO.read(new File("src/main/resources/GameOver_Project.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -31,8 +35,14 @@ public class GamePanel extends JPanel implements Runnable{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+        if (logic.phase == 3) {
+            g.drawImage(gameover, 0, 0, width, height, null);
+        }
         if (logic.phase== 0){
             g.drawImage(menu, 0, 0, 1080, 720, null);
+            if(logic.rules){
+                g.drawImage(rules,0,0,width,height, null);
+            }
         }
         if (logic.phase== 1){
 
@@ -52,7 +62,10 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
         while (true){
-            logic.update();
+            if(logic.phase != 0 && logic.phase != 3){
+                logic.update();
+            }
+
             repaint();
 
             try {

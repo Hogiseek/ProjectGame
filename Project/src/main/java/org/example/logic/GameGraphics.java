@@ -7,6 +7,7 @@ public class GameGraphics extends JFrame{
     GamePanel panel;
 
     public GameGraphics() throws HeadlessException {
+        setResizable(false);
         panel = new GamePanel();
         add(panel);
         pack();

@@ -9,6 +9,7 @@ import java.io.IOException;
 public class Draw extends Coordinates {
     BufferedImage image;
     int width, height;
+
     Draw(){
 
     }

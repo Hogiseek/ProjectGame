@@ -18,6 +18,7 @@ public class GameLogic implements KeyListener {
     ArrayList<Bird> birds;
     Bird bird;
     int phase;
+    boolean rules;
 
 
 
@@ -26,7 +27,7 @@ public class GameLogic implements KeyListener {
         int screenHeight= 720;
         int screenWidth= 1080;
         islands= new ArrayList<>();
-        player= new Player();
+        player= new Player(this);
         birds= new ArrayList<>();
         backGround= new BackGround("BackgroundDone.png",0);
 
@@ -111,6 +112,17 @@ public class GameLogic implements KeyListener {
         }
         else if (keys== KeyEvent.VK_M && phase== 2){
             phase= 1;
+        }
+        if (keys== KeyEvent.VK_H && phase== 0 && !rules){
+            rules = true;
+        } else if (keys == KeyEvent.VK_H && phase == 0) {
+            rules = false;
+        }
+        if (keys== KeyEvent.VK_ESCAPE  && phase == 0){
+            System.exit(0);
+        }
+        if (keys== KeyEvent.VK_ENTER && phase== 3){
+            phase= 0;
         }
     }
 

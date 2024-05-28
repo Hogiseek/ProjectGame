@@ -17,14 +17,16 @@ public class Player extends Draw implements KeyListener {
     public boolean canJump = true;
     private final int frameHeight = 720;
     private final int frameWidth = 1080;
+    GameLogic logic;
 
 
-    public Player() {
+    public Player(GameLogic logic) {
+        this.logic = logic;
         setImage("King_JumpR.png");
         setHeight(80);
         setWidth(80);
         setX(500);
-        setY(100-getHeight());
+        setY(100 - getHeight());
         addKeyListener(this);
         jumpTimer = new Timer(500, new ActionListener() {
             @Override
@@ -58,6 +60,8 @@ public class Player extends Draw implements KeyListener {
                 }
             }
         }
+
+
         if (RIGHT) {
             x+= 6;
             for (Island island: islands){
@@ -66,6 +70,7 @@ public class Player extends Draw implements KeyListener {
                 }
             }
         }
+
         if (LEFT) {
             setImage("King_JumpL.png");
         } else if (RIGHT) {
@@ -83,7 +88,10 @@ public class Player extends Draw implements KeyListener {
 
         // zajistí aby se hra obnovila
         if (y > frameHeight - height) {
-            restartGame();
+            setX(500);
+            setY(100 - getHeight());
+            logic.phase = 3;
+
         }
         // vpravo neprojde
         if (x> frameWidth -width) {
@@ -94,10 +102,6 @@ public class Player extends Draw implements KeyListener {
            x= 0;
         }
 
-    }
-    private void restartGame() {
-        setX(500);
-        setY(100 - getHeight());
     }
 
     @Override
