@@ -37,6 +37,10 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         if (logic.phase == 3) {
             g.drawImage(gameover, 0, 0, width, height, null);
+            logic.stopTimer();
+            logic.setVisible(false);
+
+
         }
         if (logic.phase== 0){
             g.drawImage(menu, 0, 0, 1080, 720, null);
@@ -45,17 +49,22 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
         if (logic.phase== 1){
-
             logic.backGround.draw(g);
-
-            logic.player.draw(g);
             for (Island island: logic.islands){
                 island.draw(g);
             }
+            logic.player.draw(g);
             for (Bird bird: logic.birds){
-                bird.draw(g);
+                if (logic.isVisible){
+                    bird.draw(g);
+                }
             }
-
+            for (Arrow arrow: logic.arrows){
+                arrow.draw(g);
+            }
+            g.setColor(Color.BLACK);
+            g.setFont(new Font("Arial", Font.BOLD, 16));
+            g.drawString("Time: " + logic.formatTime(logic.gameDurationInSeconds), 10, 20);
         }
     }
 

@@ -3,10 +3,12 @@ package org.example.logic;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameLogic implements KeyListener {
@@ -16,25 +18,45 @@ public class GameLogic implements KeyListener {
     Player player;
     BackGround backGround;
     ArrayList<Bird> birds;
-    Bird bird;
+    Bird bird, bird1, bird2, bird3;
+    Timer birdTimer;
+    ArrayList<Arrow> arrows;
+    Arrow arrow, arrow1, arrow2, arrow3, arrow4, arrow5, arrow6, arrow7;
+    Timer arrowTimer;
     int phase;
     boolean rules;
-
-
-
+    long Time;
+    int gameDurationInSeconds;
+    boolean isVisible;
 
     public GameLogic() {
+        Time = 0;
+        this.isVisible= true;
+        gameDurationInSeconds = 0;
         int screenHeight= 720;
-        int screenWidth= 1080;
         islands= new ArrayList<>();
         player= new Player(this);
         birds= new ArrayList<>();
+        arrows= new ArrayList<>();
         backGround= new BackGround("BackgroundDone.png",0);
+        birdTimer= new Timer();
+        birdTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (phase== 1){
+                    addBird();
+                }
 
-        bird= new Bird("Bird_UP.png", 1, 50, 50, 50, screenWidth);
+            }
+        }, 0, 5000); // spuštění každých 5 sekund
 
-        birds.add(bird);
-
+        arrowTimer= new Timer();
+        arrowTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                addArrow();
+            }
+        },0 , 5000); // spuštění každých 5 sekund
 
 
         island= new Island("Island.png", 40, 150, 50, 50, screenHeight);
@@ -91,12 +113,95 @@ public class GameLogic implements KeyListener {
         islands.add(island23);
         //islands.add(island24);
         islands.add(island25);
-    }
 
+    }
     public void update() {
         player.update(islands);
         backGround.update();
-        bird.update();
+        for (Bird bird: birds){
+            bird.update();
+        }
+        for (Arrow arrow: arrows){
+            arrow.update();
+        }
+        if (phase== 1 && gameDurationInSeconds<= 10){
+            isVisible= true;
+        }
+        if (Time > 0) {
+            gameDurationInSeconds = (int) ((System.currentTimeMillis() - Time) / 1000);
+        }
+    }
+    //spustění časovače
+    private void startTimer() {
+        Time= System.currentTimeMillis();
+    }
+    //zastavení časovače, výpočet délky hraní
+    public void stopTimer() {
+        long endTime = System.currentTimeMillis();
+        gameDurationInSeconds= (int) ((endTime- Time) / 1000); // Převod na sekundy
+    }
+    public String formatTime(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int secs = seconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, secs);
+    }
+    private void addBird() {
+        int screenWidth= 1080;
+        bird= new Bird("Bird_UP.png", 0, 50, 50, 50, screenWidth);
+        bird1= new Bird("Bird_DOWN.png", 0, 200, 50, 50, screenWidth);
+        bird2= new Bird("Bird_UP.png", 0, 380, 50, 50, screenWidth);
+        bird3= new Bird("Bird_DOWN.png", 0, 600, 50, 50, screenWidth);
+
+        if (gameDurationInSeconds>= 10 && gameDurationInSeconds<= 12){
+            birds.add(bird);
+        }
+        if (gameDurationInSeconds>= 15 && gameDurationInSeconds<= 18){
+            birds.add(bird1);
+        }
+        if (gameDurationInSeconds>= 20 && gameDurationInSeconds<= 24){
+            birds.add(bird2);
+        }
+        if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 30){
+            birds.add(bird3);
+        }
+    }
+    private void addArrow() {
+        int screenHeight= 720;
+        arrow= new Arrow("Arrow.png", 20, 0, 50, 50, screenHeight);
+        arrow1= new Arrow("Arrow.png", 150, 0, 50, 50, screenHeight);
+        arrow2= new Arrow("Arrow.png", 275, 0, 50, 50, screenHeight);
+        arrow3= new Arrow("Arrow.png", 400, 0, 50, 50, screenHeight);
+        arrow4= new Arrow("Arrow.png", 570, 0, 50, 50, screenHeight);
+        arrow5= new Arrow("Arrow.png", 775, 0, 50, 50, screenHeight);
+        arrow6= new Arrow("Arrow.png", 950, 0, 50, 50, screenHeight);
+        arrow7= new Arrow("Arrow.png", 1100, 0, 50, 50, screenHeight);
+
+        if (gameDurationInSeconds>= 70 && gameDurationInSeconds<= 72){
+            arrows.add(arrow);
+        }
+        if (gameDurationInSeconds>= 80 && gameDurationInSeconds<= 82){
+            arrows.add(arrow1);
+        }
+        if (gameDurationInSeconds>= 95 && gameDurationInSeconds<= 98){
+            arrows.add(arrow2);
+        }
+        if (gameDurationInSeconds>= 107 && gameDurationInSeconds<= 110){
+            arrows.add(arrow3);
+        }
+        if (gameDurationInSeconds>= 120 && gameDurationInSeconds<= 123){
+            arrows.add(arrow4);
+        }
+        if (gameDurationInSeconds>= 132 && gameDurationInSeconds<= 135){
+            arrows.add(arrow5);
+        }
+        if (gameDurationInSeconds>= 150 && gameDurationInSeconds<= 155){
+            arrows.add(arrow6);
+        }
+        if (gameDurationInSeconds>= 168 && gameDurationInSeconds<= 172){
+            arrows.add(arrow7);
+        }
+
     }
 
     @Override
@@ -109,9 +214,7 @@ public class GameLogic implements KeyListener {
         int keys = e.getKeyCode();
         if (keys== KeyEvent.VK_ENTER && phase== 0){
             phase= 1;
-        }
-        else if (keys== KeyEvent.VK_M && phase== 2){
-            phase= 1;
+            startTimer();
         }
         if (keys== KeyEvent.VK_H && phase== 0 && !rules){
             rules = true;
@@ -124,10 +227,21 @@ public class GameLogic implements KeyListener {
         if (keys== KeyEvent.VK_ENTER && phase== 3){
             phase= 0;
         }
+        if (keys== KeyEvent.VK_ESCAPE  && phase == 3){
+            System.exit(0);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    public ArrayList<Bird> getBirds() {
+        return birds;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 }
