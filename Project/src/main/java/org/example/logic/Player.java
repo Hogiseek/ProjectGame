@@ -38,25 +38,62 @@ public class Player extends Draw implements KeyListener {
         });
     }
 
-    public void update(ArrayList<Island> islands){
-        for (Island island: islands){
+    public void update(ArrayList<Island> islands, ArrayList<Bird> birds, ArrayList<Arrow> arrows){
+        for (Island island : islands) {
             island.update(); // updatí každého islandu pozici
             if (getRect().intersects(island.getRect())) {
                 Rectangle playerRect = getRect();
                 Rectangle islandRect = island.getRect();
 
+                // Kontrola kolize shora
                 if (velocity > 0 && playerRect.y + playerRect.height - velocity <= islandRect.y) {
-                    y = islandRect.y - height; // místo playera nahoře islandu
+                    y = islandRect.y - height; // umístí playera nahoře islandu
                     velocity = 0; // přestane padat
                 }
+                // Kontrola kolize zespodu
+                else if (velocity < 0 && playerRect.y - velocity >= islandRect.y + islandRect.height) {
+                    y = islandRect.y + islandRect.height; // umístí playera zespodu islandu
+                    velocity = 1; // přestane se pohybovat vzhůru
+                }
             }
+        }
+        for (Bird bird: birds){
+            bird.update(); // updatí každého ptáka pozici
+            if (getRect().intersects(bird.getRect())) {
+                Rectangle playerRect = getRect();
+                Rectangle birdRect = bird.getRect();
 
+                if (velocity > 0 && playerRect.y + playerRect.height - velocity <= birdRect.y) {
+                    x= birdRect.x - width;
+                }
+            }
+        }
+        for (Arrow arrow: arrows){
+            arrow.update(); // updatí každého šípu pozici
+            if (getRect().intersects(arrow.getRect())) {
+                Rectangle playerRect = getRect();
+                Rectangle arrowRect = arrow.getRect();
+
+                if (velocity > 0 && playerRect.y + playerRect.height - velocity <= arrowRect.y) {
+                    x= arrowRect.x - width;
+                }
+            }
         }
         if (LEFT) {
             x-= 6;
             for (Island island: islands){
                 if (island.getRect().intersects(getRect())){
                     x+= 6;
+                }
+            }
+            for (Bird bird: birds){
+                if (bird.getRect().intersects(getRect())){
+                    logic.phase = 3;
+                }
+            }
+            for (Arrow arrow: arrows){
+                if (arrow.getRect().intersects(getRect())){
+                    logic.phase = 3;
                 }
             }
         }
@@ -67,6 +104,16 @@ public class Player extends Draw implements KeyListener {
             for (Island island: islands){
                 if (island.getRect().intersects(getRect())){
                     x-= 6;
+                }
+            }
+            for (Bird bird: birds){
+                if (bird.getRect().intersects(getRect())){
+                    logic.phase = 3;
+                }
+            }
+            for (Arrow arrow: arrows){
+                if (arrow.getRect().intersects(getRect())){
+                    logic.phase = 3;
                 }
             }
         }

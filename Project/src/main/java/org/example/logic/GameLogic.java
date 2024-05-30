@@ -116,14 +116,8 @@ public class GameLogic implements KeyListener {
 
     }
     public void update() {
-        player.update(islands);
+        player.update(islands, birds, arrows);
         backGround.update();
-        for (Bird bird: birds){
-            bird.update();
-        }
-        for (Arrow arrow: arrows){
-            arrow.update();
-        }
         if (phase== 1 && gameDurationInSeconds<= 10){
             isVisible= true;
         }
@@ -153,16 +147,16 @@ public class GameLogic implements KeyListener {
         bird2= new Bird("Bird_UP.png", 0, 380, 50, 50, screenWidth);
         bird3= new Bird("Bird_DOWN.png", 0, 600, 50, 50, screenWidth);
 
-        if (gameDurationInSeconds>= 10 && gameDurationInSeconds<= 12){
+        if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 27){
             birds.add(bird);
         }
-        if (gameDurationInSeconds>= 15 && gameDurationInSeconds<= 18){
+        if (gameDurationInSeconds>= 28 && gameDurationInSeconds<= 33){
             birds.add(bird1);
         }
-        if (gameDurationInSeconds>= 20 && gameDurationInSeconds<= 24){
+        if (gameDurationInSeconds>= 35 && gameDurationInSeconds<= 45){
             birds.add(bird2);
         }
-        if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 30){
+        if (gameDurationInSeconds>= 55 && gameDurationInSeconds<= 60){
             birds.add(bird3);
         }
     }
