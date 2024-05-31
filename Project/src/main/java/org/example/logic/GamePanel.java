@@ -38,7 +38,6 @@ public class GamePanel extends JPanel implements Runnable{
         if (logic.phase == 3) {
             g.drawImage(gameover, 0, 0, width, height, null);
             logic.stopTimer();
-            logic.setVisible(false);
 
 
         }
@@ -55,9 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             logic.player.draw(g);
             for (Bird bird: logic.birds){
-                if (logic.isVisible){
                     bird.draw(g);
-                }
             }
             for (Arrow arrow: logic.arrows){
                 arrow.draw(g);

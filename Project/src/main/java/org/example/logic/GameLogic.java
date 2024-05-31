@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class GameLogic implements KeyListener {
+public class GameLogic extends Draw implements KeyListener {
 
     ArrayList<Island> islands;
     Island island, island1, island2, island3, island4, island5, island6, island7, island8, island9, island10, island11, island12, island13, island14, island15, island16, island17, island18, island19, island20, island21, island22, island23, island24, island25;
@@ -118,12 +118,18 @@ public class GameLogic implements KeyListener {
     public void update() {
         player.update(islands, birds, arrows);
         backGround.update();
-        if (phase== 1 && gameDurationInSeconds<= 10){
-            isVisible= true;
-        }
         if (Time > 0) {
             gameDurationInSeconds = (int) ((System.currentTimeMillis() - Time) / 1000);
+
         }
+    }
+
+    public void resetGame(){
+        stopTimer();
+        Time = 0;
+        gameDurationInSeconds = 0;
+        birds.clear();
+        arrows.clear();
     }
     //spustění časovače
     private void startTimer() {
@@ -149,6 +155,9 @@ public class GameLogic implements KeyListener {
 
         if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 27){
             birds.add(bird);
+            if (phase== 3){
+
+            }
         }
         if (gameDurationInSeconds>= 28 && gameDurationInSeconds<= 33){
             birds.add(bird1);
@@ -195,7 +204,6 @@ public class GameLogic implements KeyListener {
         if (gameDurationInSeconds>= 168 && gameDurationInSeconds<= 172){
             arrows.add(arrow7);
         }
-
     }
 
     @Override
@@ -220,6 +228,7 @@ public class GameLogic implements KeyListener {
         }
         if (keys== KeyEvent.VK_ENTER && phase== 3){
             phase= 0;
+            resetGame();
         }
         if (keys== KeyEvent.VK_ESCAPE  && phase == 3){
             System.exit(0);
@@ -229,13 +238,5 @@ public class GameLogic implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
-    }
-
-    public ArrayList<Bird> getBirds() {
-        return birds;
-    }
-
-    public void setVisible(boolean visible) {
-        isVisible = visible;
     }
 }
