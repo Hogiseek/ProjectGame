@@ -27,11 +27,9 @@ public class GameLogic extends Draw implements KeyListener {
     boolean rules;
     long Time;
     int gameDurationInSeconds;
-    boolean isVisible;
 
     public GameLogic() {
         Time = 0;
-        this.isVisible= true;
         gameDurationInSeconds = 0;
         int screenHeight= 720;
         islands= new ArrayList<>();
@@ -43,9 +41,8 @@ public class GameLogic extends Draw implements KeyListener {
         birdTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (phase== 1){
                     addBird();
-                }
+
 
             }
         }, 0, 5000); // spuštění každých 5 sekund
@@ -54,7 +51,7 @@ public class GameLogic extends Draw implements KeyListener {
         arrowTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                addArrow();
+                    addArrow();
             }
         },0 , 5000); // spuštění každých 5 sekund
 
@@ -141,33 +138,27 @@ public class GameLogic extends Draw implements KeyListener {
         gameDurationInSeconds= (int) ((endTime- Time) / 1000); // Převod na sekundy
     }
     public String formatTime(int seconds) {
-        int hours = seconds / 3600;
-        int minutes = (seconds % 3600) / 60;
-        int secs = seconds % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, secs);
+        return String.format("%d", seconds);
     }
     private void addBird() {
         int screenWidth= 1080;
         bird= new Bird("Bird_UP.png", 0, 50, 50, 50, screenWidth);
-        bird1= new Bird("Bird_DOWN.png", 0, 200, 50, 50, screenWidth);
-        bird2= new Bird("Bird_UP.png", 0, 380, 50, 50, screenWidth);
-        bird3= new Bird("Bird_DOWN.png", 0, 600, 50, 50, screenWidth);
+        //bird1= new Bird("Bird_DOWN.png", 0, 200, 50, 50, screenWidth);
+        bird2= new Bird("Bird_UP.png", 0, 500, 50, 50, screenWidth);
+        //bird3= new Bird("Bird_DOWN.png", 0, 600, 50, 50, screenWidth);
 
-        if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 27){
+        if (gameDurationInSeconds>= 25 && gameDurationInSeconds<= 29){
             birds.add(bird);
-            if (phase== 3){
-
-            }
         }
-        if (gameDurationInSeconds>= 28 && gameDurationInSeconds<= 33){
-            birds.add(bird1);
-        }
-        if (gameDurationInSeconds>= 35 && gameDurationInSeconds<= 45){
+        //if (gameDurationInSeconds>= 28 && gameDurationInSeconds<= 33){
+            //birds.add(bird1);
+        //}
+        if (gameDurationInSeconds>= 35 && gameDurationInSeconds<= 39){
             birds.add(bird2);
         }
-        if (gameDurationInSeconds>= 55 && gameDurationInSeconds<= 60){
-            birds.add(bird3);
-        }
+        //if (gameDurationInSeconds>= 55 && gameDurationInSeconds<= 60){
+            //birds.add(bird3);
+        //}
     }
     private void addArrow() {
         int screenHeight= 720;
@@ -180,22 +171,22 @@ public class GameLogic extends Draw implements KeyListener {
         arrow6= new Arrow("Arrow.png", 950, 0, 50, 50, screenHeight);
         arrow7= new Arrow("Arrow.png", 1100, 0, 50, 50, screenHeight);
 
-        if (gameDurationInSeconds>= 70 && gameDurationInSeconds<= 72){
+        if (gameDurationInSeconds>= 70 && gameDurationInSeconds<= 78){
             arrows.add(arrow);
         }
-        if (gameDurationInSeconds>= 80 && gameDurationInSeconds<= 82){
+        if (gameDurationInSeconds>= 80 && gameDurationInSeconds<= 85){
             arrows.add(arrow1);
         }
-        if (gameDurationInSeconds>= 95 && gameDurationInSeconds<= 98){
+        if (gameDurationInSeconds>= 95 && gameDurationInSeconds<= 99){
             arrows.add(arrow2);
         }
-        if (gameDurationInSeconds>= 107 && gameDurationInSeconds<= 110){
+        if (gameDurationInSeconds>= 107 && gameDurationInSeconds<= 111){
             arrows.add(arrow3);
         }
-        if (gameDurationInSeconds>= 120 && gameDurationInSeconds<= 123){
+        if (gameDurationInSeconds>= 120 && gameDurationInSeconds<= 124){
             arrows.add(arrow4);
         }
-        if (gameDurationInSeconds>= 132 && gameDurationInSeconds<= 135){
+        if (gameDurationInSeconds>= 132 && gameDurationInSeconds<= 137){
             arrows.add(arrow5);
         }
         if (gameDurationInSeconds>= 150 && gameDurationInSeconds<= 155){

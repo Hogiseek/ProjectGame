@@ -119,26 +119,23 @@ public class Player extends Draw implements KeyListener {
         }
 
         if (LEFT) {
-            setImage("King_JumpL.png");
+            setImage("King_JumpL.png");// padá dolů
         } else if (RIGHT) {
-            setImage("King_JumpR.png");
+            setImage("King_JumpR.png");// obnoví rychlost když skáče
         }
         if (JUMP && canJump) {
-            velocity-= 20; // obnoví rychlost když skáče
+            velocity-= 20;
             canJump= false;
         } else if (JUMP){
-            y+= 2; // padá dolů
+        y+= 2;
         }
         y+= velocity; // aktivuje rychlost
         velocity+= 1; // dělá to gravitaci
-
-
         // zajistí aby se hra obnovila
         if (y > frameHeight - height) {
             setX(500);
             setY(100 - getHeight());
             logic.phase = 3;
-
         }
         // vpravo neprojde
         if (x> frameWidth -width) {
@@ -150,18 +147,15 @@ public class Player extends Draw implements KeyListener {
         }
 
     }
-
     @Override
     public void keyTyped(KeyEvent e) {
 
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         int keys = e.getKeyCode();
         if (keys == KeyEvent.VK_A) {
             LEFT = true;
-
         }
         if (keys == KeyEvent.VK_D) {
             RIGHT = true;
@@ -171,10 +165,7 @@ public class Player extends Draw implements KeyListener {
             canJump = false; // dělá dokud cooldown není dokončen
             jumpTimer.start(); // Startne cooldown
         }
-
-
     }
-
     @Override
     public void keyReleased(KeyEvent e) {
         int keys = e.getKeyCode();

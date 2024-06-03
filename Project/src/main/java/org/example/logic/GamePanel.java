@@ -24,9 +24,9 @@ public class GamePanel extends JPanel implements Runnable{
         setFocusable(true);
         requestFocus();
         try {
-            menu= ImageIO.read(new File("src/main/resources/Menu_Project.png"));
-            rules= ImageIO.read(new File("src/main/resources/Rules_Project.png"));
-            gameover= ImageIO.read(new File("src/main/resources/GameOver_Project.png"));
+            menu= ImageIO.read(getClass().getResource("/Menu_Project.png"));
+            rules= ImageIO.read(getClass().getResource("/Rules_Project.png"));
+            gameover= ImageIO.read(getClass().getResource("/GameOver_Project.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -35,11 +35,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        if (logic.phase == 3) {
+        if (logic.phase== 3) {
             g.drawImage(gameover, 0, 0, width, height, null);
             logic.stopTimer();
-
-
         }
         if (logic.phase== 0){
             g.drawImage(menu, 0, 0, 1080, 720, null);
@@ -54,13 +52,13 @@ public class GamePanel extends JPanel implements Runnable{
             }
             logic.player.draw(g);
             for (Bird bird: logic.birds){
-                    bird.draw(g);
+                bird.draw(g);
             }
             for (Arrow arrow: logic.arrows){
                 arrow.draw(g);
             }
             g.setColor(Color.BLACK);
-            g.setFont(new Font("Arial", Font.BOLD, 16));
+            g.setFont(new Font("Kristen ITC", Font.BOLD, 16));
             g.drawString("Time: " + logic.formatTime(logic.gameDurationInSeconds), 10, 20);
         }
     }
@@ -79,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 }

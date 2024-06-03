@@ -3,7 +3,7 @@ package org.example.logic;
 import java.util.ArrayList;
 
 public class Bird extends Draw {
-    private int moveRight= 2; // rychlost při které se pohybuje doprava
+    private int moveRight= 4; // rychlost při které se pohybuje doprava
     private int screenWidth; // šířka screenu
 
     public Bird(String file, int x, int y, int width, int height, int screenWidth){
